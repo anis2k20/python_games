@@ -24,13 +24,13 @@ def minion_game(string):
                 stuart.append(i)
 
     # calculation for STUART-----------
-    for i in (sorted(stuart,key=len)):
+    for i in stuart:
         regex = f"(?={i})"
         res = len(re.findall(regex, string))
         stuart_score += res
 
     #calculation for KEVIN-----------
-    for i in (sorted(kevin,key=len)):
+    for i in kevin:
         regex = f"(?={i})"
         res = len(re.findall(regex, string))
         kevin_score += res
