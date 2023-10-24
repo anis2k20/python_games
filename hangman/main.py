@@ -19,12 +19,13 @@ def word_match():
 
     dash_count = len(random_word)
     word_travers = 0
+    HANG = 0
     for i in range(attempt):
         # user input
-        user_input = input("Enter guessing latter: ")
+        user_input = input("Enter guessing latter: ").lower()
 
 
-        if user_input == random_word[word_travers]:
+        if user_input == random_word[word_travers].lower():
             dash_count -= 1
             word_travers +=1
             dash=""
@@ -33,7 +34,11 @@ def word_match():
             print(f"{random_word[:word_travers]} {dash}")
 
         else:
-            print("not exist")
+            try:
+                print(art[HANG])
+                HANG += 1
+            except IndexError:
+                print("Game Over")
 
 
 art_instruction = word_match()
