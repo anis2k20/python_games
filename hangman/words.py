@@ -1,0 +1,2 @@
+words = "Daffodil Lily  Rose  Iris  Daisy  Dahlia  Jasmine  Tulip  Lavender  Marigold  Lotus  Carnation  Orchid  Anemone  Sunflower  Poppy  Amaryllis  Peony  Magnolia  Gladiolus  Azalea  Petunia  Lilac"
+word_list = words.split()
