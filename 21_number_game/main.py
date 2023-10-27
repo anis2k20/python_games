@@ -31,7 +31,6 @@ if ask=="y":
                 all_number.append(num)
 
 
-
         # user input--------------------------
         def user_input():
             n = int(input("Enter a number: "))
@@ -58,8 +57,11 @@ if ask=="y":
             num_of_computer_input = random.randint(1, 10)
             taking_input_from_computer(num_of_computer_input)
 
-
+        # Chance Selector--------------------
         chance = input("Do you want first chance or second chance(F/S): ").lower()
+
+        # def chance_selector(chance):
+
         if chance == "f":
             user_status = 1
             computer_status = 0
@@ -70,12 +72,20 @@ if ask=="y":
             user_status = 0
             second_chance()
 
+
+
+        # list display--------------------
+
+
         display_list = sorted(all_number)
         print(display_list)
 
         if len(display_list)>=21:
             print("Game Over.")
             is_running = False
+
+
+
 
 
 
