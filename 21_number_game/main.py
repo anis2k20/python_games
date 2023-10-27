@@ -39,6 +39,7 @@ if ask=="y":
         def taking_input_from_user(n):
             for i in range(n):
                 user_input()
+            computer_input()
 
         # computer input----------------------
         def computer_input():
@@ -48,6 +49,7 @@ if ask=="y":
         def taking_input_from_computer(n):
             for i in range(n):
                 computer_input()
+            user_input()
 
         def first_chance():
             number_of_user_input = int(input("How many number do you want to enter: "))
