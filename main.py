@@ -2,22 +2,26 @@ import random
 
 HOW_MANY_TIME_IT_RUN = 5
 container = []
+winner_status = ""
 # first_chance---------------------
 def first_chance(c):
     global HOW_MANY_TIME_IT_RUN
-
+    global winner_status
     # check consecutive
     def check_consecutive(c):
         return sorted(c) == list(range(min(c),max(c)+1))
 
     if c == "f":
         HOW_MANY_TIME_IT_RUN -= 1
+        have_twenty = 0
         # input function--------------
         def input_func(x):
             my_values = []
             for i in range(x):
                 n = int(input("Enter value: "))
                 my_values.append(n)
+                if n==20:
+                    have_twenty = 1
 
             is_consecutive = check_consecutive(my_values)
 
@@ -27,6 +31,9 @@ def first_chance(c):
                     second_chance(x)
             else:
                 disqualified()
+
+            if 20 in my_values:
+                winner_status = "Me"
 
         # finish line check----------
         if HOW_MANY_TIME_IT_RUN >= 0:
@@ -69,7 +76,10 @@ def second_chance(c):
         for i in range(y):
             last_element += 1
             values.append(last_element)
+        if 20 in values:
+            winner_status = "computer"
         container.append(values)
+
         print(container)
         # first_chance(y)
 
@@ -98,6 +108,7 @@ def second_chance(c):
 
 
 
+
 # disqualified----------------------
 def disqualified():
     print("You are disqualified")
@@ -118,18 +129,11 @@ elif choice == "s":
     second_chance(choice)
 
 
-# finish line check------------
-# if HOW_MANY_TIME_IT_RUN>1:
-#     print("Your turn.")
-#     input_amount = int(input("How many number do you want as a input?: "))
-#
-#     if input_amount<4:
-#         input_func(input_amount)
-#
-#     elif input_amount>=4:
-#         disqualified()
-# else:
-#     print("Game over")
-
 # Testing Section------------
-print(container)
+if winner_status == "Me":
+    print("You win!")
+elif winner_status == "computer":
+    print("You loss!")
+
+
+# print(container)

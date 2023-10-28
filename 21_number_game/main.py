@@ -1,93 +1,139 @@
 import random
 
-print("Welcome to 21 Number Game!")
-ask = input("Do you want to start this game(Y/N): ").lower()
+HOW_MANY_TIME_IT_RUN = 5
+container = []
+winner_status = ""
+# first_chance---------------------
+def first_chance(c):
+    global HOW_MANY_TIME_IT_RUN
+    global winner_status
+    # check consecutive
+    def check_consecutive(c):
+        return sorted(c) == list(range(min(c),max(c)+1))
 
-if ask=="y":
-    computer_status = 0
-    user_status = 0
-    all_number = [2]
-    is_running = True
-    is_gameover = False
+    if c == "f":
+        HOW_MANY_TIME_IT_RUN -= 1
+        have_twenty = 0
+        # input function--------------
+        def input_func(x):
+            my_values = []
+            for i in range(x):
+                n = int(input("Enter value: "))
+                my_values.append(n)
+                if n==20:
+                    have_twenty = 1
 
-    while is_running:
-        # number check (exist or not)
-        def input_check(num):
-            if num in all_number:
-                if user_status == 1:
-                    print("Sorry! This number already exist, try another one.")
-                    try:
-                        user_input()
+            is_consecutive = check_consecutive(my_values)
 
-                    except RecursionError:
-                        is_gameover = True
-
-                elif computer_status == 1:
-                    try:
-                        computer_input()
-                    except RecursionError:
-                        is_gameover = True
+            if is_consecutive is True:
+                container.append(my_values)
+                if HOW_MANY_TIME_IT_RUN >=0:
+                    second_chance(x)
             else:
-                all_number.append(num)
+                disqualified()
+
+            if 20 in my_values:
+                winner_status = "Me"
+
+        # finish line check----------
+        if HOW_MANY_TIME_IT_RUN >= 0:
+            print("Your turn.")
+            input_amount = int(input("How many number do you want as a input?: "))
+
+            if input_amount < 4:
+                input_func(input_amount)
+
+            elif input_amount >= 4:
+                disqualified()
+
+    # when I choose 2nd turn player
+    else:
+        HOW_MANY_TIME_IT_RUN -= 1
+        my_values = []
+        for i in range(4-c):
+            n = int(input("Enter value: "))
+            my_values.append(n)
+        is_consecutive = check_consecutive(my_values)
+        if is_consecutive is True:
+            container.append(my_values)
+            print(container)
+            if HOW_MANY_TIME_IT_RUN>=1:
+                second_chance("s")
+
+        else:
+            disqualified()
 
 
-        # user input--------------------------
-        def user_input():
-            n = int(input("Enter a number: "))
-            input_check(n)
+# Second chance---------------------
+def second_chance(c):
+    if c == "s":
+        values = []
+        if not container:
+            last_element = 0
+        else:
+            last_element = container[-1][-1]
+        y = random.randint(1,3)
+        for i in range(y):
+            last_element += 1
+            values.append(last_element)
+        if 20 in values:
+            winner_status = "computer"
+        container.append(values)
 
-        def taking_input_from_user(n):
-            for i in range(n):
-                user_input()
-            computer_input()
+        print(container)
+        # first_chance(y)
 
-        # computer input----------------------
-        def computer_input():
-            n = random.randint(1,21)
-            input_check(n)
+        # Game finish line---------------
+        if HOW_MANY_TIME_IT_RUN >= 1:
+            first_chance(y)
 
-        def taking_input_from_computer(n):
-            for i in range(n):
-                computer_input()
-            user_input()
 
-        def first_chance():
-            number_of_user_input = int(input("How many number do you want to enter: "))
-            taking_input_from_user(number_of_user_input)
+    # when I am choose 1st turn player
+    else:
+        input_amount = 4-c
+        values = []
+        last_element = container[-1][-1]
 
-        def second_chance():
-            num_of_computer_input = random.randint(1, 10)
-            taking_input_from_computer(num_of_computer_input)
+        for i in range(input_amount):
+            last_element += 1
+            values.append(last_element)
+        container.append(values)
+        print(container)
 
-        # Chance Selector--------------------
-        chance = input("Do you want first chance or second chance(F/S): ").lower()
 
-        # def chance_selector(chance):
-
-        if chance == "f":
-            user_status = 1
-            computer_status = 0
-            first_chance()
-
-        elif chance == "s":
-            computer_status = 1
-            user_status = 0
-            second_chance()
+        # Game finish line---------------
+        if HOW_MANY_TIME_IT_RUN >= 1:
+            first_chance("f")
 
 
 
-        # list display--------------------
 
 
-        display_list = sorted(all_number)
-        print(display_list)
-
-        if len(display_list)>=21:
-            print("Game Over.")
-            is_running = False
+# disqualified----------------------
+def disqualified():
+    print("You are disqualified")
 
 
 
 
 
 
+# Game initial point----------------
+print("Player 2 is computer.")
+ask = input("Do you want to play 21 Number Game? (Y/N): ").lower()
+choice = input("Do you want first chance or second chance(F/S): ").lower()
+
+if choice == "f":
+    first_chance(choice)
+elif choice == "s":
+    second_chance(choice)
+
+
+# Testing Section------------
+if winner_status == "Me":
+    print("You win!")
+elif winner_status == "computer":
+    print("You loss!")
+
+
+# print(container)
