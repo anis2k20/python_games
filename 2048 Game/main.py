@@ -46,14 +46,19 @@ def start_game():
     def up():
         new_pos = RandomPos()
         new_mat = mat_blueprint().mat
-
+        for r in range(0,3):
+            for c in range(0,3):
+                # new_mat[r][c] = mat[0][c]+mat[1][c]+mat[2][c]+mat[3][c]
+        new_mat[new_pos[0]][new_pos[1]] = '4'
         print(np.matrix(new_mat))
 
 
-    up()
 
 
-
+    # user input---------------------------
+    user_input = input("Enter your movement: ").lower()
+    if user_input == "u":
+        up()
 
 
 
